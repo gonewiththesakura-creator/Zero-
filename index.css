@@ -1,0 +1,34 @@
+/* 彻底隐藏 Sub2API 的标识 */
+.v-toolbar-title, .site-logo { display: none !important; }
+
+/* 苹果级极简背景 */
+body, .v-application { background: #fbfbfd !important; color: #1d1d1f !important; }
+
+/* 重塑登录/注册卡片 */
+.v-card, .login-container {
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: saturate(180%) blur(20px) !important;
+    border-radius: 30px !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05) !important;
+    padding: 20px !important;
+}
+
+/* 按钮重绘：苹果蓝 */
+.v-btn {
+    background: #0071e3 !important;
+    color: #fff !important;
+    border-radius: 980px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    box-shadow: none !important;
+}
+
+/* 输入框重绘 */
+.v-field {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border-radius: 12px !important;
+    border: none !important;
+}
+</style>
