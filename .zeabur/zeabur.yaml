@@ -1,0 +1,11 @@
+service: sub2api
+image: weishaw/sub2api:latest
+ports:
+  - port: 8080
+    type: HTTP
+env:
+  RUN_MODE: simple
+  SIMPLE_MODE_CONFIRM: "true"
+  ALLOW_REGISTER: "true"
+  SECURITY_URL_ALLOWLIST_ENABLED: "false"
+  SECURITY_URL_ALLOWLIST_ALLOW_INSECURE_HTTP: "true"
