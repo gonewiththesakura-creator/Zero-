@@ -3,63 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DreamAPI | 开启 AI 的无限可能</title>
+    <title>DreamAPI | 全球领先的 AI 接口分发平台</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', -apple-system, sans-serif; background-color: #000; color: #fff; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        body { font-family: 'Inter', -apple-system, sans-serif; background-color: #000; color: #fff; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .apple-gradient { background: linear-gradient(180deg, #fff 0%, #a1a1a6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .btn-apple { background: #fff; color: #000; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-apple:hover { transform: scale(1.02); opacity: 0.9; }
+        .btn-primary { background: #fff; color: #000; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
+        canvas { filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.2)); }
     </style>
 </head>
 <body class="overflow-x-hidden">
-    <!-- 导航栏 -->
+    <!-- 极简导航 -->
     <nav class="fixed w-full z-50 glass py-4 px-8 flex justify-between items-center">
-        <div class="text-xl font-semibold tracking-tight">DreamAPI</div>
-        <div class="space-x-8 text-sm text-gray-400">
-            <a href="#" class="hover:text-white transition">模型</a>
-            <a href="#" class="hover:text-white transition">定价</a>
-            <a href="https://pay.dreamapi.club" class="hover:text-white transition">充值</a>
-            <a href="https://api.dreamapi.club" class="btn-apple px-4 py-2 rounded-full text-black font-medium">进入控制台</a>
+        <div class="text-xl font-semibold tracking-tighter text-white">DreamAPI<span class="text-blue-500">.</span></div>
+        <div class="hidden md:flex space-x-10 text-sm font-light text-gray-400">
+            <a href="#trends" class="hover:text-white transition">实时数据</a>
+            <a href="https://pay.dreamapi.club" class="hover:text-white transition">获取额度</a>
+            <a href="https://api.dreamapi.club/auth/register" class="text-white font-medium">注册账号</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="h-screen flex flex-col items-center justify-center text-center px-4">
-        <h1 class="text-6xl md:text-8xl font-bold tracking-tighter apple-gradient mb-6">更精致的 AI 接入体验。</h1>
-        <p class="text-xl md:text-2xl text-gray-400 max-w-2xl font-light">支持 Gemini Pro、Claude 3.5 等顶尖模型。专为追求极致性能与设计感的开发者打造。</p>
-        <div class="mt-12 flex space-x-6">
-            <a href="https://api.dreamapi.club/auth/register" class="btn-apple px-8 py-4 rounded-full text-lg font-semibold">即刻开始</a>
-            <a href="https://pay.dreamapi.club" class="text-white flex items-center hover:underline text-lg font-light">了解定价 <span class="ml-2">→</span></a>
+    <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20">
+        <div class="inline-block px-4 py-1 mb-6 text-xs font-medium tracking-widest uppercase border border-gray-800 rounded-full text-gray-500">
+            Next Generation AI Gateway
+        </div>
+        <h1 class="text-5xl md:text-8xl font-bold tracking-tighter apple-gradient mb-8 leading-tight">
+            所有顶尖模型<br>从此，一个接口。
+        </h1>
+        <p class="text-lg md:text-2xl text-gray-500 max-w-2xl font-light mb-12">
+            稳定分发 Gemini 1.5 Pro, Claude 3.5 Sonnet 与 GPT-4o。<br>为全球开发者提供毫秒级响应的 API 转发服务。
+        </p>
+        <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
+            <a href="https://api.dreamapi.club/auth/register" class="btn-primary px-10 py-4 rounded-full text-lg font-semibold">免费开启试用</a>
+            <a href="https://pay.dreamapi.club" class="glass px-10 py-4 rounded-full text-lg font-light hover:bg-white/10 transition">查看闲鱼套餐</a>
         </div>
     </section>
 
-    <!-- 特性展示 -->
-    <section class="py-24 px-8 bg-[#0a0a0a]">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass p-8 rounded-3xl">
-                <div class="text-blue-500 text-3xl mb-4">✦</div>
-                <h3 class="text-xl font-semibold mb-2">极速响应</h3>
-                <p class="text-gray-400 font-light">全球边缘网络覆盖，每一次调用都快如闪电。</p>
+    <!-- 趋势图 Section -->
+    <section id="trends" class="py-32 px-8 max-w-6xl mx-auto">
+        <div class="glass p-10 rounded-[2.5rem] relative overflow-hidden">
+            <div class="flex justify-between items-start mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight">热门模型活跃度</h2>
+                    <p class="text-gray-500 mt-2 font-light">全网实时 Token 调用趋势 (24h)</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-green-400 text-sm font-mono">● LIVE</span>
+                </div>
             </div>
-            <div class="glass p-8 rounded-3xl">
-                <div class="text-purple-500 text-3xl mb-4">❃</div>
-                <h3 class="text-xl font-semibold mb-2">多模型聚合</h3>
-                <p class="text-gray-400 font-light">一个 Key 开启所有顶级 AI 接口，告别繁琐。</p>
-            </div>
-            <div class="glass p-8 rounded-3xl">
-                <div class="text-orange-500 text-3xl mb-4">◈</div>
-                <h3 class="text-xl font-semibold mb-2">稳定可靠</h3>
-                <p class="text-gray-400 font-light">99.9% 可用性保证，为您的创意保驾护航。</p>
+            <div class="h-[400px] w-full">
+                <canvas id="usageChart"></canvas>
             </div>
         </div>
     </section>
 
-    <footer class="py-12 text-center text-gray-600 text-sm border-t border-gray-900">
-        &copy; 2026 DreamAPI. All rights reserved. <br>
-        <span class="mt-2 inline-block">Designed for the future.</span>
+    <!-- Footer -->
+    <footer class="py-20 text-center text-gray-600 text-xs tracking-widest uppercase border-t border-gray-900">
+        &copy; 2026 DreamAPI Club. Powered by Apple-grade infrastructure.
     </footer>
+
+    <script>
+        const ctx = document.getElementById('usageChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+                datasets: [{
+                    label: 'Gemini 1.5 Pro',
+                    data: [12, 19, 45, 60, 72, 95, 110],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointRadius: 0
+                }, {
+                    label: 'Claude 3.5',
+                    data: [5, 12, 30, 45, 80, 120, 150],
+                    borderColor: '#a855f7',
+                    backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { display: false },
+                    x: { grid: { display: false }, ticks: { color: '#444' } }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
