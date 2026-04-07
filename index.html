@@ -12,96 +12,69 @@
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .apple-gradient { background: linear-gradient(180deg, #fff 0%, #a1a1a6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .btn-primary { background: #fff; color: #000; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
-        canvas { filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.2)); }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .modal.active { display: flex; }
     </style>
 </head>
 <body class="overflow-x-hidden">
-    <!-- 极简导航 -->
+    <!-- 导航 -->
     <nav class="fixed w-full z-50 glass py-4 px-8 flex justify-between items-center">
-        <div class="text-xl font-semibold tracking-tighter text-white">DreamAPI<span class="text-blue-500">.</span></div>
-        <div class="hidden md:flex space-x-10 text-sm font-light text-gray-400">
-            <a href="#trends" class="hover:text-white transition">实时数据</a>
-            <a href="https://pay.dreamapi.club" class="hover:text-white transition">获取额度</a>
+        <div class="text-xl font-semibold tracking-tighter">DreamAPI<span class="text-blue-500">.</span></div>
+        <div class="flex space-x-10 text-sm font-light text-gray-400">
             <a href="https://api.dreamapi.club/auth/register" class="text-white font-medium">注册账号</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20">
-        <div class="inline-block px-4 py-1 mb-6 text-xs font-medium tracking-widest uppercase border border-gray-800 rounded-full text-gray-500">
-            Next Generation AI Gateway
-        </div>
-        <h1 class="text-5xl md:text-8xl font-bold tracking-tighter apple-gradient mb-8 leading-tight">
-            所有顶尖模型<br>从此，一个接口。
-        </h1>
+        <h1 class="text-5xl md:text-8xl font-bold tracking-tighter apple-gradient mb-8">从此，一个接口。</h1>
         <p class="text-lg md:text-2xl text-gray-500 max-w-2xl font-light mb-12">
-            稳定分发 Gemini 1.5 Pro, Claude 3.5 Sonnet 与 GPT-4o。<br>为全球开发者提供毫秒级响应的 API 转发服务。
+            稳定分发 Gemini 1.5 Pro, Claude 3.5 Sonnet 与 GPT-4o。<br>让 AI 接入像呼吸一样简单。
         </p>
         <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
-            <a href="https://api.dreamapi.club/auth/register" class="btn-primary px-10 py-4 rounded-full text-lg font-semibold">免费开启试用</a>
-            <a href="https://pay.dreamapi.club" class="glass px-10 py-4 rounded-full text-lg font-light hover:bg-white/10 transition">查看闲鱼套餐</a>
+            <a href="https://api.dreamapi.club/auth/register" class="btn-primary px-10 py-4 rounded-full text-lg font-semibold">开始调用</a>
+            <button onclick="document.getElementById('qrModal').classList.add('active')" class="glass px-10 py-4 rounded-full text-lg font-light hover:bg-white/10 transition">查看闲鱼套餐</button>
         </div>
     </section>
 
-    <!-- 趋势图 Section -->
-    <section id="trends" class="py-32 px-8 max-w-6xl mx-auto">
-        <div class="glass p-10 rounded-[2.5rem] relative overflow-hidden">
-            <div class="flex justify-between items-start mb-12">
-                <div>
-                    <h2 class="text-3xl font-bold tracking-tight">热门模型活跃度</h2>
-                    <p class="text-gray-500 mt-2 font-light">全网实时 Token 调用趋势 (24h)</p>
-                </div>
-                <div class="text-right">
-                    <span class="text-green-400 text-sm font-mono">● LIVE</span>
-                </div>
-            </div>
-            <div class="h-[400px] w-full">
-                <canvas id="usageChart"></canvas>
-            </div>
+    <!-- 图表 -->
+    <section class="py-32 px-8 max-w-6xl mx-auto">
+        <div class="glass p-10 rounded-[2.5rem]">
+            <h2 class="text-3xl font-bold mb-8">实时调用趋势</h2>
+            <div class="h-[300px] w-full"><canvas id="usageChart"></canvas></div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-20 text-center text-gray-600 text-xs tracking-widest uppercase border-t border-gray-900">
-        &copy; 2026 DreamAPI Club. Powered by Apple-grade infrastructure.
-    </footer>
+    <!-- 闲鱼弹窗 -->
+    <div id="qrModal" class="modal" onclick="this.classList.remove('active')">
+        <div class="glass p-8 rounded-[2.5rem] max-w-xs text-center" onclick="event.stopPropagation()">
+            <h3 class="text-xl font-bold mb-4">DreamAPI 官方闲鱼</h3>
+            <p class="text-gray-400 text-sm mb-6 font-light">保存下方图片并在闲鱼打开<br>或直接扫描购买兑换码</p>
+            <div class="bg-white p-4 rounded-3xl mb-6">
+                <img src="/xianyu.png" alt="闲鱼二维码" class="w-full h-auto" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=DreamAPI_Xianyu'">
+            </div>
+            <button onclick="document.getElementById('qrModal').classList.remove('active')" class="text-blue-500 text-sm font-medium">我知道了</button>
+        </div>
+    </div>
 
     <script>
         const ctx = document.getElementById('usageChart').getContext('2d');
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+                labels: ['00:00','04:00','08:00','12:00','16:00','20:00','24:00'],
                 datasets: [{
-                    label: 'Gemini 1.5 Pro',
-                    data: [12, 19, 45, 60, 72, 95, 110],
+                    label: 'API Activity',
+                    data: [15, 25, 55, 80, 100, 130, 160],
                     borderColor: '#3b82f6',
                     backgroundColor: 'rgba(59, 130, 246, 0.1)',
                     fill: true,
                     tension: 0.4,
-                    borderWidth: 3,
-                    pointRadius: 0
-                }, {
-                    label: 'Claude 3.5',
-                    data: [5, 12, 30, 45, 80, 120, 150],
-                    borderColor: '#a855f7',
-                    backgroundColor: 'rgba(168, 85, 247, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    borderWidth: 3,
+                    borderWidth: 2,
                     pointRadius: 0
                 }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    y: { display: false },
-                    x: { grid: { display: false }, ticks: { color: '#444' } }
-                }
-            }
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { display: false }, x: { grid: { display: false } } } }
         });
     </script>
 </body>
